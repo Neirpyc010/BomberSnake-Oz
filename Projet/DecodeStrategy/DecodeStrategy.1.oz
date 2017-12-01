@@ -21,7 +21,8 @@ in
    end
    
    fun{DecodeStrategy Strategy}
-      Strategy
+      case Strategy of
+	 H|T then case H of repeat(X) then {DecodeRepeat H} else {ApplyInstruction H Next}
    end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
