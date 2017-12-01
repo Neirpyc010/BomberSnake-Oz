@@ -3,17 +3,20 @@ local
    DecodeStrategy
    ApplyInstruction
    Next
+   DecodeRepeat
    Snake=snake(positions:[pos(x:4 y:2 to:east) pos(x:3 y:2 to:east) pos(x:2 y:2 to:east)] effects:nil)
 in
    fun{Next}
       {Browse $}
    end
-   
+
+   fun{DecodeRepeat X}
+      
    proc{ApplyInstruction L Next}
       case L of nil then skip
-      [] X|L2 then
-	 {Next X}
-	 {ApplyInstruction L2 Next}
+      [] H|T then
+	 {Next H}
+	 {ApplyInstruction T Next}
       end
    end
    
@@ -21,7 +24,8 @@ in
       Strategy
    end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    
-
-   {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next}
+   %Test de la fonction ApplyInstruction
+   {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next} 
 end
