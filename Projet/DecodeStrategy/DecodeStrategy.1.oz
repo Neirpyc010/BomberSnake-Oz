@@ -17,7 +17,13 @@ in
    %Fonction qui decode les instructions de type : repeat([turn(right)] times:2)
    %et appelle la fonction next en consequence
    proc{DecodeRepeat X}
-      {Browse X}
+      local Inst Times in
+	 Inst = X.1
+	 Times = X.times
+	 for E in 1..Times do
+	    {Next Snake Inst}
+	 end
+      end
    end
 
    %Fonction qui applique Next a une liste d'instructions de types : forward,turn(left),turn(right)
@@ -50,5 +56,9 @@ in
  %  {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next}
 
    %Test de la fonction DecodeStrategy
-   {DecodeStrategy [turn(left) repeat([turn(right)] times:2) forward]}
+   {DecodeStrategy [turn(left) repeat([turn(right)] times:1) forward]}
+
+   %Test de la fonction DecodeRepeat
+ %  {DecodeRepeat repeat([turn(right)] times:2)}
+
 end
