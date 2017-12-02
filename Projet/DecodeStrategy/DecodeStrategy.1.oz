@@ -4,11 +4,13 @@ local
    ApplyInstruction
    Next
    DecodeRepeat
-   Snake=snake(positions:[pos(x:4 y:2 to:east) pos(x:3 y:2 to:east) pos(x:2 y:2 to:east)] effects:nil)
+%   Snake=snake(positions:[pos(x:4 y:2 to:east) pos(x:3 y:2 to:east) pos(x:2 y:2 to:east)] effects:nil)
+   Snake= 'snake'
+   Appel= 'Appel de la fonction Next {'
+   Crochet= '}'
 in
    proc{Next Snake I}
-      {Browse Snake}
-      {Browse I}
+      {Browse Appel|Snake|I|Crochet}
    end
 
    proc{DecodeRepeat X}
@@ -22,7 +24,7 @@ in
       end
    end
    
-   fun{DecodeStrategy Strategy}
+   proc{DecodeStrategy Strategy}
       case Strategy of H|T then
 	 if H == forward orelse H == turn(left) orelse H == turn(right) then
 	    {Next Snake H}
@@ -31,6 +33,7 @@ in
 	    {DecodeRepeat H}
 	    {DecodeStrategy T}
 	 end
+      [] nil then skip
       end
    end
    
@@ -40,4 +43,5 @@ in
  %  {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next}
 
    %Test de la fonction DecodeStrategy
+   {DecodeStrategy [turn(left) repeat([turn(right)] times:2) forward]}
 end
