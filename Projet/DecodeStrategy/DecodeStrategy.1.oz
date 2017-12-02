@@ -9,13 +9,19 @@ local
    Appel= 'Appel de la fonction Next {'
    Crochet= '}'
 in
+   %Fonction Next simplifiee pour les tests
    proc{Next Snake I}
       {Browse Appel|Snake|I|Crochet}
    end
 
+   %Fonction qui decode les instructions de type : repeat([turn(right)] times:2)
+   %et appelle la fonction next en consequence
    proc{DecodeRepeat X}
       {Browse X}
    end
+
+   %Fonction qui applique Next a une liste d'instructions de types : forward,turn(left),turn(right)
+   %(pour l'instant elle n'est plus utile
    proc{ApplyInstruction L Next}
       case L of nil then skip
       [] H|T then
@@ -23,7 +29,8 @@ in
 	 {ApplyInstruction T Next}
       end
    end
-   
+
+   %Fonction principale
    proc{DecodeStrategy Strategy}
       case Strategy of H|T then
 	 if H == forward orelse H == turn(left) orelse H == turn(right) then
