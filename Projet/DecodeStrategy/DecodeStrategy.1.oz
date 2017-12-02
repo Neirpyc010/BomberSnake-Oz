@@ -18,7 +18,7 @@ in
    %et appelle la fonction next en consequence
    proc{DecodeRepeat X}
       local Inst Times in
-	 Inst = X.1
+	 Inst = X.1.1
 	 Times = X.times
 	 for E in 1..Times do
 	    {Next Snake Inst}
@@ -56,7 +56,7 @@ in
  %  {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next}
 
    %Test de la fonction DecodeStrategy
-   {DecodeStrategy [turn(left) repeat([turn(right)] times:1) forward]}
+   {DecodeStrategy [turn(left) repeat([turn(right)] times:2) forward]}
 
    %Test de la fonction DecodeRepeat
  %  {DecodeRepeat repeat([turn(right)] times:2)}

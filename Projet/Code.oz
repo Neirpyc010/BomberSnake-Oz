@@ -35,7 +35,7 @@ in
       AppendLists
       DeleteLast
       DecodeRepeat
-      
+      Snake
       
    in
       % La fonction qui renvoit les nouveaux attributs du serpent après prise
@@ -155,7 +155,7 @@ in
 	       {DecodeRepeat H}
 	       {DecodeStrategy T}
 	    end
-	 [] nil then skip
+	 [] nil then Snake
 	 end
       end
       
@@ -170,6 +170,8 @@ in
 	    end
 	 end
       end
+
+      
       
       % Options
       Options = options(
