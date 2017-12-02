@@ -11,8 +11,8 @@ in
       {Browse I}
    end
 
-   fun{DecodeRepeat X}
-      X
+   proc{DecodeRepeat X}
+      {Browse X}
    end
    proc{ApplyInstruction L Next}
       case L of nil then skip
@@ -22,16 +22,22 @@ in
       end
    end
    
-%   fun{DecodeStrategy Strategy}
- %     case Strategy of
-%	 H|T then case H of repeat(X) then {DecodeRepeat H} else {ApplyInstruction H Next}
-%		  end
- %     end
-  %    
-  % end
-
+   fun{DecodeStrategy Strategy}
+      case Strategy of H|T then
+	 if H == forward orelse H == turn(left) orelse H == turn(right) then
+	    {Next Snake H}
+	    {DecodeStrategy T}
+	 else
+	    {DecodeRepeat H}
+	    {DecodeStrategy T}
+	 end
+      end
+   end
+   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    
    %Test de la fonction ApplyInstruction
-   {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next} 
+ %  {ApplyInstruction [turn(right) turn(right) turn(right) forward] Next}
+
+   %Test de la fonction DecodeStrategy
 end
