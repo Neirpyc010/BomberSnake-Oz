@@ -34,7 +34,9 @@ in
       % Declare your functions here
       AppendLists
       DeleteLast
-      Next
+      DecodeRepeat
+      
+      
    in
       % La fonction qui renvoit les nouveaux attributs du serpent après prise
       % en compte des effets qui l'affectent et de son instruction
@@ -145,16 +147,35 @@ in
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
       fun {DecodeStrategy Strategy}
-	 [fun{$ Snake}
-	     Snake
-	  end]
+	 case Strategy of H|T then
+	    if H == forward orelse H == turn(left) orelse H == turn(right) then
+	       {Next Snake H}
+	       {DecodeStrategy T}
+	    else
+	       {DecodeRepeat H}
+	       {DecodeStrategy T}
+	    end
+	 [] nil then skip
+	 end
       end
-
+      
+      %Fonction qui decode les instructions de type : repeat([turn(right)] times:2)
+      %et appelle la fonction next en consequence
+      fun{DecodeRepeat X}
+	 local Inst Times in
+	    Inst = X.1
+	    Times = X.times
+	    for E in 1..Times do
+	       {Next Snake Inst}
+	    end
+	 end
+      end
+      
       % Options
       Options = options(
 		   % Fichier contenant le scénario (depuis Dossier)
 		   % Path of the scenario (relative to Dossier)
-		   scenario:'scenario_pvp.oz'
+		   scenario:'scenario_test_moves.oz'
 		   % Visualisation de la partie
 		   % Graphical mode
 		   debug: true
