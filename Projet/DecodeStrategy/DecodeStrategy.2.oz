@@ -57,5 +57,6 @@ in
       Snake|X|nil
    end
 
+%%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   {Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.2.2.1 'Snake' }}
 end
