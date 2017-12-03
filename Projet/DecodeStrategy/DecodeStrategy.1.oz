@@ -8,6 +8,7 @@ local
    Snake= 'snake'
    Appel= 'Appel de la fonction Next {'
    Crochet= '}'
+   ListNext
 in
    %Fonction Next simplifiee pour les tests
    proc{Next Snake I}
@@ -26,6 +27,13 @@ in
       end
    end
 
+   %Fonction qui cree la liste d'appels a Next
+   fun{ListNext X L}
+      case L of H|T then H|{ListNext X T}
+      [] nil then X|nil
+      end
+   end
+   
    %Fonction qui applique Next a une liste d'instructions de types : forward,turn(left),turn(right)
    %(pour l'instant elle n'est plus utile
    proc{ApplyInstruction L Next}
