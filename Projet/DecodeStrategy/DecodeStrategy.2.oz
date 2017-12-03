@@ -4,6 +4,7 @@ local
    CellList={NewCell nil} %La cellule contenant la liste d'appels à Next sous la forme @CellList = [fun{$ Snake}{Next Snake Instruction}end]
    Next
    DecodeStrategy
+   DecodeStrategy2
 in
       % La fonction qui decode la strategie d'un serpent en une liste de fonctions. Chacune correspond
       % a un instant du jeu et applique l'instruction devant etre executee a cet instant au snake
@@ -13,33 +14,30 @@ in
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
    fun{DecodeStrategy Strategy}
-      local
-	 proc{DecodeStrategy2 Strategy}
-	    case Strategy of H|T then
-	       if H == forward orelse H == turn(left) orelse H == turn(right) then
-		  CellList := {ListNext H @CellList}
-		  {DecodeStrategy2 T}
-	       else
-		  {DecodeRepeat H}
-		  {DecodeStrategy2 T}
-	       end
-	    else skip
+      
+      proc{DecodeStrategy2 Strategy}
+	 case Strategy of H|T then
+	    if H == forward orelse H == turn(left) orelse H == turn(right) then
+	       CellList := {ListNext H @CellList}
+	       {DecodeStrategy2 T}
+	    else
+	       {DecodeRepeat H}
+	       {DecodeStrategy2 T}
 	    end
+	 else skip
 	 end
-      in
-	 {DecodeStrategy2 Strategy}
-	 @CellList
       end
+      {DecodeStrategy2 Strategy}
+      @CellList
    end
    
       %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
       %et change ainsi la liste contenue dans la cell : CellList
    proc{DecodeRepeat X}
-      local Inst Times in
-	 Inst = X.1
+      local Times in
 	 Times = X.times
 	 for E in 1..Times do
-	    CellList := {ListNext Inst @CellList}
+	    {DecodeStrategy2 X.1}
 	 end
       end
    end
@@ -58,5 +56,5 @@ in
    end
 
 %%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  {Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.2.2.1 'Snake' }}
+  {Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.1 'Snake' }}
 end
