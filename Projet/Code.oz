@@ -3,10 +3,10 @@ local
    % Please replace this path with your own working directory that contains ProjectLib.ozf
 
    % Dossier = {Property.condGet cwdir '/home/max/Desktop/FSAB1402/Projet-2017/StudentPack'} % Unix example
-    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Windows example.
+   Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Windows example.
    SnakeLib
 
-   % Les deux fonctions que vous devez implémenter
+   % Les deux fonctions que vous devez implementer
    % The two function you have to implement
    Next
    DecodeStrategy
@@ -20,29 +20,39 @@ local
    Options
 in
    % Merci de conserver cette ligne telle qu'elle.
-   % Please do NOT change this line.
    [SnakeLib] = {Link [Dossier#'/'#'ProjectLib.ozf']}
    {Browse SnakeLib.play}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Your code goes here  %
-% Votre code vient ici %
 %%%%%%%%%%%%%%%%%%%%%%%%
 
    local
-      % Déclarez vos functions ici
-      % Declare your functions here
+      % Declarez vos functions ici
       AppendLists
       DeleteLast
       DecodeRepeat
-      CellList={NewCell nil}
       ListNext
+      CellList={NewCell nil} %La cellule contenant la liste d'appels � Next sous la forme @CellList = [fun{$ Snake}{Next Snake Instruction}end]
       
    in
-      % La fonction qui renvoit les nouveaux attributs du serpent après prise
+
+      %Append pour associer 2 listes
+      fun {AppendLists L1 L2}
+	 if L1 == nil then L2
+	 else L1.1 | {AppendLists L1.2  L2}
+	 end
+      end
+      
+      %Supprimer le dernier element d'une liste
+      fun {DeleteLast L}
+	 case L of H|T andthen T==nil then nil
+	 [] H|T andthen T\=nil then H|{DeleteLast T}
+	 end
+      end
+
+      % La fonction qui renvoit les nouveaux attributs du serpent apres prise
       % en compte des effets qui l'affectent et de son instruction
-      % The function that computes the next attributes of the snake given the effects
-      % affecting him as well as the instruction
       % 
       % instruction ::= forward | turn(left) | turn(right)
       % P ::= <integer x such that 1 <= x <= 22>
@@ -55,22 +65,6 @@ in
       %               ]
       %               effects: [grow|revert|teleport(x:<P> y:<P>)|... ...]
       %            )
-
-      %Append pour associer 2 listes
-      fun {AppendLists L1 L2}
-	 if L1 == nil then L2
-	 else L1.1 | {AppendLists L1.2  L2}
-	 end
-      end
-      
-      %Supprimer le dernier element d une liste
-      fun {DeleteLast L}
-	 case L of H|T andthen T==nil then nil
-	 [] H|T andthen T\=nil then H|{DeleteLast T}
-	 end
-      end
-
-      %La fameuse fonction Next
       fun {Next Snakein Instruction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FORWARD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -193,8 +187,8 @@ in
 	 end
       end
       
-      %Fonction qui decode les instructions de type : repeat([turn(right)] times:2)
-      %et appelle la fonction next en consequence
+      %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
+      %et change ainsi la liste contenue dans la cell : CellList
       proc{DecodeRepeat X}
 	 local Inst Times in
 	    Inst = X.1
