@@ -35,6 +35,8 @@ in
       AppendLists
       DeleteLast
       DecodeRepeat
+      CellList={NewCell nil}
+      ListNext
       
    in
       % La fonction qui renvoit les nouveaux attributs du serpent après prise
@@ -145,28 +147,44 @@ in
       % strategy ::= <instruction> '|' <strategy>
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
-      fun {DecodeStrategy Strategy}
-	 case Strategy of H|T then
-	    if H == forward orelse H == turn(left) orelse H == turn(right) then
-	       {Next Snake H}
-	       {DecodeStrategy T}
-	    else
-	       {DecodeRepeat H}
-	       {DecodeStrategy T}
+      fun{DecodeStrategy Strategy}
+	 local
+	    proc{DecodeStrategy2 Strategy}
+	       case Strategy of H|T then
+		  if H == forward orelse H == turn(left) orelse H == turn(right) then
+		     CellList := {ListNext H @CellList}
+		     {DecodeStrategy2 T}
+		  else
+		     {DecodeRepeat H}
+		     {DecodeStrategy2 T}
+		  end
+	       else skip
+	       end
 	    end
-	 else $
+	 in
+	    {DecodeStrategy2 Strategy}
+	    @CellList
 	 end
       end
       
       %Fonction qui decode les instructions de type : repeat([turn(right)] times:2)
       %et appelle la fonction next en consequence
-      fun{DecodeRepeat X}
+      proc{DecodeRepeat X}
 	 local Inst Times in
 	    Inst = X.1
 	    Times = X.times
 	    for E in 1..Times do
-	       {Next Snake Inst}
+	       CellList := {ListNext Inst @CellList}
 	    end
+	 end
+      end
+      
+      %Fonction qui rajoute a la fin de la liste L la fonction d'appel a Next
+      %Avec l'instruction donnee en X
+      fun{ListNext X L}
+	 case L of H|T then H|{ListNext X T}
+	 [] nil then
+	    fun{$ Snake}{Next Snake X}end|nil
 	 end
       end
 
@@ -182,7 +200,7 @@ in
 		   debug: true
 		   % Instants par seconde, 0 spécifie une exécution pas à pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
 		   % Steps per second, 0 for step by step. (press 'Space' to go one step further)
-		   frameRate: 0
+		   frameRate: 1
 		   )
    end
 
