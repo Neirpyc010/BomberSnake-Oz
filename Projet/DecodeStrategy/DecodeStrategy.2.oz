@@ -52,4 +52,10 @@ in
 	 fun{$ Snake}{Next Snake X}end|nil
       end
    end
+
+   fun{Next Snake X}
+      Snake|X|nil
+   end
+
+  {Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.2.2.1 'Snake' }}
 end
