@@ -6,7 +6,7 @@ in
 	    step: 0
 	    snakes: [
 		     snake(team:blue name:gordon
-			   positions: [pos(x:10 y:11 to:south) pos(x:10 y:10 to:south) pos(x:10 y:9 to:south) pos(x:10 y:9 to:south)]
+			   positions: [pos(x:10 y:11 to:south) pos(x:10 y:10 to:south) pos(x:10 y:9 to:south)]
 			   effects: nil
 			   strategy: [repeat([forward] times:20)]
 			   bombing: NoBomb
