@@ -34,7 +34,7 @@ in
       DecodeRepeat
       ListNext
       CellList={NewCell nil} %La cellule contenant la liste d'appels ‡ Next sous la forme @CellList = [fun{$ Snake}{Next Snake Instruction}end]
-      
+      DecodeStrategy2
    in
 
       %Append pour associer 2 listes
@@ -168,33 +168,29 @@ in
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
       fun{DecodeStrategy Strategy}
-	 local
-	    proc{DecodeStrategy2 Strategy}
-	       case Strategy of H|T then
-		  if H == forward orelse H == turn(left) orelse H == turn(right) then
-		     CellList := {ListNext H @CellList}
-		     {DecodeStrategy2 T}
-		  else
-		     {DecodeRepeat H}
-		     {DecodeStrategy2 T}
-		  end
-	       else skip
+	 proc{DecodeStrategy2 Strategy}
+	    case Strategy of H|T then
+	       if H == forward orelse H == turn(left) orelse H == turn(right) then
+		  CellList := {ListNext H @CellList}
+		  {DecodeStrategy2 T}
+	       else
+		  {DecodeRepeat H}
+		  {DecodeStrategy2 T}
 	       end
+	    else skip
 	    end
-	 in
-	    {DecodeStrategy2 Strategy}
-	    @CellList
 	 end
+	 {DecodeStrategy2 Strategy}
+	 @CellList
       end
       
       %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
       %et change ainsi la liste contenue dans la cell : CellList
       proc{DecodeRepeat X}
-	 local Inst Times in
-	    Inst = X.1
+	 local Times in
 	    Times = X.times
 	    for E in 1..Times do
-	       CellList := {ListNext Inst @CellList}
+	       {DecodeStrategy2 X.1}
 	    end
 	 end
       end
@@ -214,7 +210,7 @@ in
       Options = options(
 		   % Fichier contenant le sc√©nario (depuis Dossier)
 		   % Path of the scenario (relative to Dossier)
-		   scenario:'scenario_pvp.oz'
+		   scenario:'scenario_test_moves.oz'
 		   % Visualisation de la partie
 		   % Graphical mode
 		   debug: true
