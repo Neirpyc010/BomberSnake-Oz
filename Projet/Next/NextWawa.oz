@@ -26,7 +26,7 @@ fun{ReversedList L}
    end
 end
 
-% Cette fonction renvoit une concaténation de listes de plusieurs listes en une seule liste
+% Cette fonction renvoit une concatenation de listes de plusieurs listes en une seule liste
 declare
 fun {FlattenList L}
    case L of nil then nil
@@ -50,7 +50,7 @@ fun {InversedHead L}
    end
 end
 
-%Fonctions devenues inutiles mais qui sont qd mm stylées pour changer toutes les directions des positions d'un serpent
+%Fonctions devenues inutiles mais qui sont qd mm stylees pour changer toutes les directions des positions d'un serpent
 %SI ON A LE TEMPS IL FAUDRAIT CORRIGER LES DIRECTIONS DES POSITIONS INTERMEDIAIRES DANS LES SERPENTS
 
 declare
