@@ -66,13 +66,13 @@ in
 % Fonction qui inverse les directions des positions d'un serpent
 	  fun {InversedHead L}
 		 if L.1.to == north then 
-			{FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)-1 to:nort)] {DeleteLast L}}}
+			{FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)-1 to:north)] {DeleteLast L}}}
 		 elseif L.1.to == south then 
 			{FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)+1 to:south)] {DeleteLast L}}}
 		 elseif L.1.to == west then 
 			{FlattenList {AppendLists [pos(x:(L.1.x)-1 y:(L.1.y) to:west)] {DeleteLast L}}}
 		 elseif L.1.to == east then 
-			{FlattenList {AppendLists [pos(x:(L.1.x)+11 y:(L.1.y) to:east)] {DeleteLast L}}}
+			{FlattenList {AppendLists [pos(x:(L.1.x)+1 y:(L.1.y) to:east)] {DeleteLast L}}}
 		 end
 	  end
 
@@ -116,7 +116,7 @@ in
 			if Snakein.positions.1.to == north then 
 			   if Snakein.effects == nil then
 			%Si le serpent arrive en bord de plateau il faut le teleporter
-				  if Snakein.positions.1.y == 1 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:21 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:20 to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+				  if Snakein.positions.1.y == 1 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:21 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:22 to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}) effects:nil)
 				  end
 			   elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] Snakein.positions} effects:nil)
@@ -325,12 +325,12 @@ in
 %%%%%%%%%%%%%%%%%% Options %%%%%%%%%%%%%%%%%%
       Options = options(
 		   % Fichier contenant le scenario (depuis Dossier)
-				   scenario:'scenario_test_revert.oz'
+				   scenario:'scenario_pvp.oz'
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
 				   frameRate:0
-		   )
+		   ) 
    end
    
    local 
