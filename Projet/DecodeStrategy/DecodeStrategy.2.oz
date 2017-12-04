@@ -58,7 +58,7 @@ in
 %%%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   %N'en tester qu'une a la fois !
-% {Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.1 'Snake' }}
+ %{Browse {{DecodeStrategy [repeat([turn(right)] times:2) forward]}.1 'Snake' }}
    {Browse
-    {{DecodeStrategy [repeat([turn(right) forward] times:2) turn(left)]}.2.2.2.2.1 'Snake'}}
+    {{DecodeStrategy [repeat([turn(right) forward] times:2) turn(left)]}.2.1 'Snake'}}
 end
