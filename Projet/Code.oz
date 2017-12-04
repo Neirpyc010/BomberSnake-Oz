@@ -1,9 +1,9 @@
 local 
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Fichiers d'exemples.
+    Dossier = {Property.condGet cwdir '/home/tux/Documents/projetinfo2/test2'} % Fichiers d'exemples.
    SnakeLib
 
-   % Déclaration des deux fonctions que nous avons du implémenter
+   % DÃ©claration des deux fonctions que nous avons du implÃ©menter
    Next
    DecodeStrategy
    
@@ -19,7 +19,7 @@ in
    {Browse SnakeLib.play}
 
    local
-      % Déclaration des fonctions ajoutées
+      % DÃ©claration des fonctions ajoutÃ©es
       AppendLists
       DeleteLast
       ReversedList
@@ -94,7 +94,7 @@ in
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% FONCTION NEXT %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Fonction qui renvoit les nouveaux attributs du serpent après prise
+    % Fonction qui renvoit les nouveaux attributs du serpent aprÃ¨s prise
       % en compte des effets qui l'affectent et de son instruction
       % 
       % instruction ::= forward | turn(left) | turn(right)
@@ -119,10 +119,10 @@ in
 				  if Snakein.positions.1.y == 1 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:21 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:20 to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] Snakein.positions} effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] Snakein.positions} effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers le sud
@@ -133,10 +133,10 @@ in
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {DeleteLast Snakein.positions}}) effects:nil)
 				  end
 				  
-			   elseif Snakein.effects == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] Snakein.positions} effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {DeleteLast Snakein.positions}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] Snakein.positions} effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {DeleteLast Snakein.positions}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l ouest
@@ -146,10 +146,10 @@ in
 				  if Snakein.positions.1.x == 1 then snake(positions:({AppendLists [pos(x:21 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:22 y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {DeleteLast Snakein.positions}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] Snakein.positions} effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {DeleteLast Snakein.positions}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)-1 y:(Snakein.effects.y) to:west)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] Snakein.positions} effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {DeleteLast Snakein.positions}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)-1 y:(Snakein.effects.1.y) to:west)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l est
@@ -159,10 +159,10 @@ in
 				  if Snakein.positions.1.x == 22 then snake(positions:({AppendLists [pos(x:2 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] Snakein.positions} effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)]  {DeleteLast Snakein.positions}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)+1 y:(Snakein.effects.y) to:east)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] Snakein.positions} effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)]  {DeleteLast Snakein.positions}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)+1 y:(Snakein.effects.1.y) to:east)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			end
 			
@@ -176,10 +176,10 @@ in
 				  if Snakein.positions.1.y == 1 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:21 to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:22 to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)-1 y:(Snakein.effects.y) to:west)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)-1 y:(Snakein.effects.1.y) to:west)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers le sud
@@ -189,10 +189,10 @@ in
 				  if Snakein.positions.1.y == 22 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:2 to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:1 to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)+1 y:(Snakein.effects.y) to:east)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)+1 y:(Snakein.effects.1.y) to:east)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l ouest
@@ -202,10 +202,10 @@ in
 				  if Snakein.positions.1.x == 1 then snake(positions:({AppendLists [pos(x:21 y:(Snakein.positions.1.y) to:south)] {AppendLists [pos(x:22 y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l est
@@ -215,10 +215,10 @@ in
 				  if Snakein.positions.1.x == 22 then snake(positions:({AppendLists [pos(x:2 y:(Snakein.positions.1.y) to:north)] {AppendLists [pos(x:1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			end
 %-------------------------------------------------------------------------------- TURN(RIGHT)      
@@ -231,10 +231,10 @@ in
 				  if Snakein.positions.1.y == 1 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:21 to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:22 to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)+1 y:(Snakein.effects.y) to:east)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)+1 y:(Snakein.effects.1.y) to:east)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers le sud
@@ -244,10 +244,10 @@ in
 				  if Snakein.positions.1.y == 22 then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:2 to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:1 to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x)-1 y:(Snakein.effects.y) to:west)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x)-1 y:(Snakein.effects.1.y) to:west)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l ouest
@@ -257,10 +257,10 @@ in
 				  if Snakein.positions.1.x == 1 then snake(positions:({AppendLists [pos(x:21 y:(Snakein.positions.1.y) to:north)] {AppendLists [pos(x:22 y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			   
 % ---------------------------------Si le serpent va vers l est
@@ -270,10 +270,10 @@ in
 				  if Snakein.positions.1.x == 22 then snake(positions:({AppendLists [pos(x:2 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  else snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 				  end
-			   elseif Snakein.effects == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
-			   elseif Snakein.effects == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
-			   elseif Snakein.effects == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
-			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.x) y:(Snakein.effects.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+			   elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
+			   elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+			   elseif Snakein.effects.1 == shrink then snake(positions:({DeleteLast {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}}) effects:nil)
+			   else snake(positions:({AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.effects.1.x) y:(Snakein.effects.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
 			   end
 			end
 		 end
@@ -284,9 +284,9 @@ in
 %%%%%%%%%%%%%%%%%%%%%%%
 %%% DECODE STRATEGY %%%
 %%%%%%%%%%%%%%%%%%%%%%%
-      % Fonction qui décode la stratégie d'un serpent en une liste de fonctions. Chacune correspond
-      % à un instant du jeu et applique l'instruction devant être exécutée à cet instant au snake
-      % passé en argument
+      % Fonction qui decode la strategie d'un serpent en une liste de fonctions. Chacune correspond
+      % Ã  un instant du jeu et applique l'instruction devant etre executee a cet instant au snake
+      % passee en argument
       %
       % strategy ::= <instruction> '|' <strategy>
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
@@ -314,7 +314,7 @@ in
 	     end
 	  end
       
-      %Fonction qui renvoie une liste compos�e de Times fois la liste L
+      %Fonction qui renvoie une liste composée de Times fois la liste L
 	  fun{MultList L Times}
 	     if Times == 0 then nil
 	     else L|{MultList L Times-1}
@@ -324,12 +324,12 @@ in
 	  
 %%%%%%%%%%%%%%%%%% Options %%%%%%%%%%%%%%%%%%
       Options = options(
-		   % Fichier contenant le scénario (depuis Dossier)
-				   scenario:'scenario_test_teleport.oz'
+		   % Fichier contenant le scenario (depuis Dossier)
+				   scenario:'scenario_test_revert.oz'
 		   % Visualisation de la partie
 				   debug: true
-		   % Instants par seconde, 0 spécifie une exécution pas à pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
-				   frameRate:1
+		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
+				   frameRate:0
 		   )
    end
    
