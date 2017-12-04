@@ -1,6 +1,6 @@
 local 
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir '/home/tux/Documents/projetinfo2/test2'} % Fichiers d'exemples.
+    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Fichiers d'exemples.
    SnakeLib
 
    % DÃ©claration des deux fonctions que nous avons du implÃ©menter
@@ -325,11 +325,11 @@ in
 %%%%%%%%%%%%%%%%%% Options %%%%%%%%%%%%%%%%%%
       Options = options(
 		   % Fichier contenant le scenario (depuis Dossier)
-				   scenario:'scenario_test_revert.oz'
+				   scenario:'scenario_pvp.oz'
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
-				   frameRate:0
+				   frameRate:1
 		   )
    end
    
