@@ -40,14 +40,38 @@ in
 
    %Fonction qui renvoie une liste composée de Times fois la liste L
    fun{MultList L Times}
-      if Times == 1 then nil
+      if Times == 0 then nil
       else L|{MultList L Times-1}
       end
    end
 %%%%%%%%%%%%%%%%%%%%%%% TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-   {Browse {{FlattenList{DecodeStrategy [forward forward turn(right) turn(left)]}}.2.2.1 'Snake'}}
-   {Browse {{FlattenList{DecodeStrategy [repeat([turn(right)] times:2) turn(left)]}}.1 'Snake'}}
-	    
+%   {Browse {{FlattenList{DecodeStrategy [forward forward turn(right) turn(left)]}}.2.2.1 'Snake'}}
+%   {Browse {{FlattenList{DecodeStrategy [repeat([turn(right)] times:2) turn(left)]}}.2.2.1 'Snake'}}
+   %Test de repeat a l'interieur de repeat : devrait afficher :
+   
+%forward
+%forward
+%turn(left)
+%forward
+%forward
+%turn(left)
+%forward
+%forward
+%turn(left)
+%forward
+   
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.1 'Snake'}} %1
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.1 'Snake'}} %2
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.1 'Snake'}} %3
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.1 'Snake'}} %4
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.1 'Snake'}} %5
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.2.1 'Snake'}} %6
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.2.2.1 'Snake'}} %7
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.2.2.2.1 'Snake'}} %8
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.2.2.2.2.1 'Snake'}} %9
+   {Browse {{FlattenList{DecodeStrategy [forward forward repeat([turn(left) repeat([forward] times:2)] times:5)]}}.2.2.2.2.2.2.2.2.2.1 'Snake'}} %10
+
+   %YES
 end
 
