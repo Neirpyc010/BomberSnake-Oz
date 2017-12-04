@@ -1,6 +1,6 @@
 local 
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir '/home/tux/Documents/projetinfo2/test'} % Fichiers d'exemples.
+    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Fichiers d'exemples.
    SnakeLib
 
    % Déclaration des deux fonctions que nous avons du implémenter
@@ -22,12 +22,13 @@ in
       % Déclaration des fonctions ajoutées
       AppendLists
       DeleteLast
-	  ReversedList
-	  FlattenList
-	  InversedHead
-	  ChangeDirection2
-	  ChangeDirection1
-
+      ReversedList
+      FlattenList
+      InversedHead
+      ChangeDirection2
+      ChangeDirection1
+      DecodeRepeat
+      MultList
    in
   
 %-----------------Append pour associer 2 listes------------------
@@ -292,27 +293,44 @@ in
       %            | nil
 	  
 	  fun{DecodeStrategy Strategy}
-		 case Strategy of H|T then
-			if H== forward orelse H==turn(left) orelse H==turn(right) then
-			   fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
-			else nil
-%	    else
-%	    {DecodeRepeat H}|{DecodeStrategy T}
-			end
-		 []nil then nil
+	     {FlattenList
+	      case Strategy of H|T then
+		 if H== forward orelse H==turn(left) orelse H==turn(right) then
+		    fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
+		 else
+		    {DecodeRepeat H}|{DecodeStrategy T}
 		 end
-      end
+	      []nil then nil
+	      end
+	     }
+	  end
+      
+      %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
+	  fun{DecodeRepeat X}
+	     local Times L in
+		Times = X.times
+		L = {DecodeStrategy X.1}
+		{MultList L Times}
+	     end
+	  end
+      
+      %Fonction qui renvoie une liste compos�e de Times fois la liste L
+	  fun{MultList L Times}
+	     if Times == 0 then nil
+	     else L|{MultList L Times-1}
+	     end
+	  end
 	  
 	  
 %%%%%%%%%%%%%%%%%% Options %%%%%%%%%%%%%%%%%%
       Options = options(
 		   % Fichier contenant le scénario (depuis Dossier)
-				   scenario:'scenario_test_moves.oz'
+				   scenario:'scenario_pvp.oz'
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spécifie une exécution pas à pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
 				   frameRate:1
-				   )
+		   )
    end
    
    local 
