@@ -31,11 +31,16 @@ in
       % Declarez vos functions ici
       AppendLists
       DeleteLast
-      DecodeRepeat
-      ListNext
-      CellList={NewCell nil} %La cellule contenant la liste d'appels à Next sous la forme @CellList = [fun{$ Snake}{Next Snake Instruction}end]
-      DecodeStrategy2
+      ReversedList
+      FlattenList
+      InversedHead
+      ChangeDirection2
+      ChangeDirection1
+      
    in
+     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+     %%%%%%%%%% FONCTIONS SUPPLEMENTAIRES %%%%%%%%%%%
+     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
       %Append pour associer 2 listes
       fun {AppendLists L1 L2}
@@ -44,121 +49,155 @@ in
 	 end
       end
       
-      %Supprimer le dernier element d'une liste
+      %Delete qui supprime le dernier element d une liste
       fun {DeleteLast L}
 	 case L of H|T andthen T==nil then nil
 	 [] H|T andthen T\=nil then H|{DeleteLast T}
 	 end
       end
+      
+      %Reverse qui renvoit l inverse d une liste
+      fun{ReversedList L}
+	 case  L of H|T andthen T==nil  then H
+	 [] H|T andthen T\=nil then [{ReversedList T} H]
+	 end
+      end
 
-      % La fonction qui renvoit les nouveaux attributs du serpent apres prise
-      % en compte des effets qui l'affectent et de son instruction
-      % 
-      % instruction ::= forward | turn(left) | turn(right)
-      % P ::= <integer x such that 1 <= x <= 22>
-      % direction ::= north | south | west | east
-      % snake ::=  snake(
-      %               positions: [
-      %                  pos(x:<P> y:<P> to:<direction>) % Head
-      %                  ...
-      %                  pos(x:<P> y:<P> to:<direction>) % Tail
-      %               ]
-      %               effects: [grow|revert|teleport(x:<P> y:<P>)|... ...]
-      %            )
-      fun {Next Snakein Instruction}
+      % Cette fonction renvoit une concatenation de listes de plusieurs listes en une seule liste
+      fun {FlattenList L}
+	 case L of nil then nil
+	 [] nil|T then {FlattenList T}
+	 [] (H1|T1)|T then {FlattenList H1|T1|T}
+	 [] X|T then X | {FlattenList T}
+	 end
+      end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FORWARD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	 
-	 if (Instruction==forward) then
-	    
-	    %Direction de la tete du serpent vers le : nord
-	    if Snakein.positions.1.to == north then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}) effects:nil)
-	       else 'Les autres effets ne sont pas encore pris en compte'
-	       end
-	       
-	    %Direction de la tete du serpent vers le : sud
-	    elseif Snakein.positions.1.to == south then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {DeleteLast Snakein.positions}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-	       
-	    %Direction de la tete du serpent vers le : Ouest
-	    elseif Snakein.positions.1.to == west then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {DeleteLast Snakein.positions}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : Est
-	    elseif Snakein.positions.1.to == east then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-	    end
-	    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TURN LEFT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	    
-	 elseif (Instruction==turn(left)) then
-
-	    %Direction de la tete du serpent vers le : nord
-	    if Snakein.positions.1.to == north then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'LEs autres effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : sud
-	    elseif Snakein.positions.1.to == south then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : ouest
-	    elseif Snakein.positions.1.to == west then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : est
-	    elseif Snakein.positions.1.to == east then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-	    end
-	    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TURN RIGHT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	    
-	 elseif (Instruction==turn(right)) then
-
-	    %Direction de la tete du serpent vers le : nord
-	    if Snakein.positions.1.to == north then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'LEs autres effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : sud
-	    elseif Snakein.positions.1.to == south then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : ouest
-	    elseif Snakein.positions.1.to == west then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end
-
-	    %Direction de la tete du serpent vers le : est
-	    elseif Snakein.positions.1.to == east then
-	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
-	       else 'Les effets ne sont pas encore pris en compte'
-	       end	 
-	    end
-
-	 %Erreur qui ne devrait jamais arriver
-	 else 'Erreur, l instruction n est pas d aller vers l avant'
+      % Fonction qui inverse les directions des positions d'un serpent
+      fun {InversedHead L}
+	 if L.1.to == north then
+	    {FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)-1 to:nort)] {DeleteLast L}}}
+	 elseif L.1.to == south then
+	    {FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)+1 to:south)] {DeleteLast L}}}
+	 elseif L.1.to == west then
+	    {FlattenList {AppendLists [pos(x:(L.1.x)-1 y:(L.1.y) to:west)] {DeleteLast L}}}
+	 elseif L.1.to == east then
+	    {FlattenList {AppendLists [pos(x:(L.1.x)+11 y:(L.1.y) to:east)] {DeleteLast L}}}
 	 end
       end
       
+      %Fonctions devenues inutiles mais qui sont qd mm stylees pour changer toutes les directions des positions d'un serpent
+      %SI ON A LE TEMPS IL FAUDRAIT CORRIGER LES DIRECTIONS DES POSITIONS INTERMEDIAIRES DANS LES SERPENTS
+
+
+      fun {ChangeDirection2 Direction}
+	 if Direction==north then south
+	 elseif Direction==south then north
+	 elseif Direction==west then east
+	 elseif Direction==east then west
+	 end
+      end
+
+
+      fun{ChangeDirection1 L}
+	 if L == nil then nil
+	 else pos(x:L.1.x y:L.1.y to:{ChangeDirection2 L.1.to})|{ChangeDirection1 L.2}
+	 end
+      end
+      
+%declare
+%Test=[pos(x:6 y:4 to:south) pos(x:6 y:3 to:south) pos(x:5 y:3 to:east) pos(x:4 y:3 to:east) pos(x:4 y:4 to:north)]
+%{Browse {ChangeDirection1 Test}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% FONCTION NEXT %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+      fun {Next Snakein Instruction}
+%-------------------------------------------------------------------------------- FORWARD
+	 if (Instruction==forward) then
+	    if Snakein.positions.1.to == north then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)]  {DeleteLast Snakein.positions}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] Snakein.positions} effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les autres effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == south then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {DeleteLast Snakein.positions}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:north)] Snakein.positions} effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == west then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {DeleteLast Snakein.positions}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:north)] Snakein.positions} effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == east then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:{AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:north)] Snakein.positions} effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    end
+%-------------------------------------------------------------------------------- TURN(LEFT)
+	 elseif (Instruction==turn(left)) then
+	    if Snakein.positions.1.to == north then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les autres effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == south then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == west then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == east then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    end
+%-------------------------------------------------------------------------------- TURN(RIGHT)
+	 elseif (Instruction==turn(right)) then
+	    if Snakein.positions.1.to == north then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)+1 y:(Snakein.positions.1.y) to:east)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:east)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'LEs autres effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == south then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x)-1 y:(Snakein.positions.1.y) to:west)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:west)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == west then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)-1 to:north)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:north)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    elseif Snakein.positions.1.to == east then
+	       if Snakein.effects.1 == nil then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)]  {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] {DeleteLast Snakein.positions.2}}}) effects:nil)
+	       elseif Snakein.effects.1 == grow then snake(positions:({AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y)+1 to:south)] {AppendLists [pos(x:(Snakein.positions.1.x) y:(Snakein.positions.1.y) to:south)] Snakein.positions.2}}) effects:nil)
+	       elseif Snakein.effects.1 == revert then snake(positions:{InversedHead {FlattenList {ReversedList {ChangeDirection1 Snakein.positions}}}} effects:nil)
+	       else 'Les effets ne sont pas encore pris en compte'
+	       end
+	    end
+	 end
+      end
       
       % La fonction qui decode la strategie d'un serpent en une liste de fonctions. Chacune correspond
       % a un instant du jeu et applique l'instruction devant etre executee a cet instant au snake
@@ -168,39 +207,14 @@ in
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
       fun{DecodeStrategy Strategy}
-	 proc{DecodeStrategy2 Strategy}
-	    case Strategy of H|T then
-	       if H == forward orelse H == turn(left) orelse H == turn(right) then
-		  CellList := {ListNext H @CellList}
-		  {DecodeStrategy2 T}
-	       else
-		  {DecodeRepeat H}
-		  {DecodeStrategy2 T}
-	       end
-	    else skip
+	 case Strategy of H|T then
+	    if H== forward orelse H==turn(left) orelse H==turn(right) then
+	       fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
+	    else nil
+%	 else
+%	    {DecodeRepeat H}|{DecodeStrategy T}
 	    end
-	 end
-	 {DecodeStrategy2 Strategy}
-	 @CellList
-      end
-      
-      %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
-      %et change ainsi la liste contenue dans la cell : CellList
-      proc{DecodeRepeat X}
-	 local Times in
-	    Times = X.times
-	    for E in 1..Times do
-	       {DecodeStrategy2 X.1}
-	    end
-	 end
-      end
-      
-      %Fonction qui rajoute a la fin de la liste L la fonction d'appel a Next
-      %Avec l'instruction donnee en X
-      fun{ListNext X L}
-	 case L of H|T then H|{ListNext X T}
-	 [] nil then
-	    fun{$ Snake}{Next Snake X}end|nil
+	 []nil then nil
 	 end
       end
 
