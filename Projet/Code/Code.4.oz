@@ -36,6 +36,8 @@ in
       InversedHead
       ChangeDirection2
       ChangeDirection1
+      DecodeRepeat
+      MultList
       
    in
      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -207,14 +209,16 @@ in
       %            | repeat(<strategy> times:<integer>) '|' <strategy>
       %            | nil
       fun{DecodeStrategy Strategy}
-	 case Strategy of H|T then
-	    if H== forward orelse H==turn(left) orelse H==turn(right) then
-	       fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
-	    else
-	       {DecodeRepeat H}|{DecodeStrategy T}
-	    end
-	 []nil then nil
-	 end
+	 {FlattenList
+	  case Strategy of H|T then
+	     if H== forward orelse H==turn(left) orelse H==turn(right) then
+		fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
+	     else
+		{DecodeRepeat H}|{DecodeStrategy T}
+	     end
+	  []nil then nil
+	  end
+	 }
       end
       
       %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
@@ -238,7 +242,7 @@ in
       Options = options(
 		   % Fichier contenant le scénario (depuis Dossier)
 		   % Path of the scenario (relative to Dossier)
-		   scenario:'scenario_moves.oz'
+		   scenario:'scenario_test_moves.oz'
 		   % Visualisation de la partie
 		   % Graphical mode
 		   debug: true
