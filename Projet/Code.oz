@@ -325,7 +325,7 @@ in
 %%%%%%%%%%%%%%%%%% Options %%%%%%%%%%%%%%%%%%
       Options = options(
 		   % Fichier contenant le scénario (depuis Dossier)
-				   scenario:'scenario_pvp.oz'
+				   scenario:'scenario_test_teleport.oz'
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spécifie une exécution pas à pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
