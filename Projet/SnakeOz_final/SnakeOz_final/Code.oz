@@ -21,7 +21,7 @@
 
 local
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir 'Users/NicolasPire/Documents/GitHub/SnakeOz/Code.oz'}
+    Dossier = {Property.condGet cwdir 'D:\\Clouds\\GitHub\\BomberSnake-Oz\\Projet\\SnakeOz_final\\SnakeOz_final'}
    SnakeLib
 
    % Declaration des deux fonctions que nous avons du implementer
@@ -357,7 +357,7 @@ in
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
-				   frameRate:1
+				   frameRate:10
 		   )
    end
 
