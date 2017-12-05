@@ -1,6 +1,6 @@
 local 
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Fichiers d'exemples.
+    Dossier = {Property.condGet cwdir '/home/tux/Documents/projetinfo2/test2'} % Fichiers d'exemples.
    SnakeLib
 
    % DÃ©claration des deux fonctions que nous avons du implÃ©menter
@@ -65,14 +65,22 @@ in
 
 % Fonction qui inverse les directions des positions d'un serpent
 	  fun {InversedHead L}
-		 if L.1.to == north then 
-			{FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)-1 to:north)] {DeleteLast L}}}
-		 elseif L.1.to == south then 
-			{FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)+1 to:south)] {DeleteLast L}}}
-		 elseif L.1.to == west then 
-			{FlattenList {AppendLists [pos(x:(L.1.x)-1 y:(L.1.y) to:west)] {DeleteLast L}}}
-		 elseif L.1.to == east then 
-			{FlattenList {AppendLists [pos(x:(L.1.x)+1 y:(L.1.y) to:east)] {DeleteLast L}}}
+		 if L.1.to == north then
+			if L.1.y==1 then {FlattenList {AppendLists [pos(x:(L.1.x) y:21 to:north)] {AppendLists [pos(x:(L.1.x) y:22 to:north)] {DeleteLast L.2}}}}
+			else {FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)-1 to:north)] {DeleteLast L}}}
+			end
+		 elseif L.1.to == south then
+			if L.1.y==22 then {FlattenList {AppendLists [pos(x:(L.1.x) y:2 to:south)] {AppendLists [pos(x:(L.1.x) y:1 to:south)] {DeleteLast L.2}}}}
+			else {FlattenList {AppendLists [pos(x:(L.1.x) y:(L.1.y)+1 to:south)] {DeleteLast L}}}
+			end	
+		 elseif L.1.to == west then
+			if L.1.x==1 then {FlattenList {AppendLists [pos(x:21 y:(L.1.y) to:west)] {AppendLists [pos(x:22 y:(L.1.y) to:west)] {DeleteLast L.2}}}}
+			else {FlattenList {AppendLists [pos(x:(L.1.x)-1 y:(L.1.y) to:west)] {DeleteLast L}}}
+			   end
+		 elseif L.1.to == east then
+			if L.1.x==22 then {FlattenList {AppendLists [pos(x:2 y:(L.1.y) to:east)] {AppendLists [pos(x:1 y:(L.1.y) to:east)] {DeleteLast L.2}}}}
+			else {FlattenList {AppendLists [pos(x:(L.1.x)+1 y:(L.1.y) to:east)] {DeleteLast L}}}
+			end
 		 end
 	  end
 
@@ -295,11 +303,11 @@ in
 	  fun{DecodeStrategy Strategy}
 	     {FlattenList
 	      case Strategy of H|T then
-		 if H== forward orelse H==turn(left) orelse H==turn(right) then
-		    fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
-		 else
-		    {DecodeRepeat H}|{DecodeStrategy T}
-		 end
+			 if H== forward orelse H==turn(left) orelse H==turn(right) then
+				fun{$ Snake} {Next Snake H}end|{DecodeStrategy T}
+			 else
+				{DecodeRepeat H}|{DecodeStrategy T}
+			 end
 	      []nil then nil
 	      end
 	     }
@@ -308,9 +316,9 @@ in
       %Procedure qui decode les instructions de type : repeat([turn(right)] times:2)
 	  fun{DecodeRepeat X}
 	     local Times L in
-		Times = X.times
-		L = {DecodeStrategy X.1}
-		{MultList L Times}
+			Times = X.times
+			L = {DecodeStrategy X.1}
+			{MultList L Times}
 	     end
 	  end
       
@@ -329,8 +337,8 @@ in
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
-				   frameRate:1
-		   )
+				   frameRate:0
+		   ) 
    end
    
    local 
