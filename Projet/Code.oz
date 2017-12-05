@@ -1,6 +1,6 @@
 local 
    % Ceci est le chemin vers le dossier du projet
-    Dossier = {Property.condGet cwdir 'D:\\Clouds\\Dropbox\\Etudes\\EPL\\Bac 1\\Q3\\LFSAB1402 - Informatique 2\\Projet'} % Fichiers d'exemples.
+    Dossier = {Property.condGet cwdir 'D:\\Clouds\\GitHub\\BomberSnake-Oz\\Projet'} % Fichiers d'exemples.
    SnakeLib
 
    % DÃ©claration des deux fonctions que nous avons du implÃ©menter

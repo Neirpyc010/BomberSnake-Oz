@@ -2,7 +2,7 @@ local
    NoBomb=false|NoBomb
 in
    scenario(bombLatency:3
-	    walls:true
+	    walls:false
 	    step: 0
 	    snakes: [
 		     snake(team:yellow name:jason
@@ -23,6 +23,7 @@ in
 		      bonus(position:pos(x:17 y:17) color:orange effect:teleport(x:6 y:6) target:catcher)
 		      bonus(position:pos(x:11 y:11) color:red effect:revert target:opponents)
 		      bonus(position:pos(x:12 y:12) color:green effect:grow target:catcher)
+		      bonus(position:pos(x:13 y:13) color:blue effect:shrink target:catcher)
 		     ]
 	    bombs: nil
 	   )
