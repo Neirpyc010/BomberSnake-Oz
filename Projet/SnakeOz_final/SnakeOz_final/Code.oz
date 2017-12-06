@@ -357,7 +357,7 @@ in
 		   % Visualisation de la partie
 				   debug: true
 		   % Instants par seconde, 0 spÃ©cifie une exÃ©cution pas Ã  pas. (appuyer sur 'Espace' fait avancer le jeu d'un pas)
-				   frameRate:10
+				   frameRate:0
 		   )
    end
 
